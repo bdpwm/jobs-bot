@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, BigInteger, TIMESTAMP, DATE, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, BigInteger, TIME, Boolean, ForeignKey, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -9,8 +9,10 @@ class User(Base):
 
     user_id = Column(BigInteger, primary_key=True, autoincrement=False)
     username = Column(String, nullable=False)
-    job_name = Column(String)
-    
+    job_name = Column(String, nullable=True)
+    schedule_time = Column(TIME)
+    schedule_on = Column(Boolean, default=False)
+
     jobs = relationship('Job', back_populates='user')
 
 
