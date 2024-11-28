@@ -55,9 +55,16 @@ async def update_on_off_schedule(user_id: int, schedule_on: bool):
         )
         await session.commit()
 
-async def save_selected_hour_to_db(user_id: int, selected_hour: int):
+async def save_selected_hour(user_id: int, selected_hour: int):
     async with AsyncSessionLocal() as session:
         await session.execute(
             update(User).where(User.user_id == user_id).values(schedule_time=time(selected_hour, 0))
+        )
+        await session.commit()
+
+async def save_job_name(user_id: int, job_name: str):
+    async with AsyncSessionLocal() as session:
+        await session.execute(
+            update(User).where(User.user_id == user_id).values(job_name=job_name)
         )
         await session.commit()
