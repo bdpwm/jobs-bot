@@ -5,7 +5,7 @@ from handlers.jobs_router import jobs_router
 
 
 async def main():
-    # await drop_db()
+    await drop_db()
     await init_db()
 
     dp.include_router(jobs_router)

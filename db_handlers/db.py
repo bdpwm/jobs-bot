@@ -3,7 +3,7 @@ from sqlalchemy.future import select
 from sqlalchemy import update, insert
 from create_bot import AsyncSessionLocal
 from sqlalchemy.exc import NoResultFound
-from db_handlers.models import User
+from db_handlers.models import User, Job
 from datetime import date, timedelta, time
 from sqlalchemy.dialects.postgresql import insert
 
@@ -68,3 +68,12 @@ async def save_job_name(user_id: int, job_name: str):
             update(User).where(User.user_id == user_id).values(job_name=job_name)
         )
         await session.commit()
+
+
+
+async def get_user_jobs(user_id: int):
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(
+            select(Job).where(Job.user_id == user_id)
+        )
+        return result.scalars().all()
