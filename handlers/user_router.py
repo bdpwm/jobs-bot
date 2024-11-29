@@ -50,7 +50,7 @@ async def my_jobs_handler(message: Message):
                 f"🏢 Company: {job.company}\n"
                 f"📍 Location: {job.location}\n"
                 f"💵 Salary: {job.salary}\n"
-                f"🔗 Link: {job.link}"
+                f"🔗 <a href='https://www.work.ua{job.link}'>Click</a>"
                 for job in jobs
             ]
         )
@@ -58,7 +58,8 @@ async def my_jobs_handler(message: Message):
         await bot.send_message(
             chat_id=message.from_user.id,
             text=f"Your jobs:\n\n{jobs_text}",
-            parse_mode="HTML"
+            parse_mode="HTML",
+            disable_web_page_preview=True,
         )
 
 

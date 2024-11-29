@@ -70,10 +70,33 @@ async def save_job_name(user_id: int, job_name: str):
         await session.commit()
 
 
-
 async def get_user_jobs(user_id: int):
     async with AsyncSessionLocal() as session:
         result = await session.execute(
             select(Job).where(Job.user_id == user_id)
         )
+        return result.scalars().all()
+
+async def save_job(job_data, user_id):
+    async with AsyncSessionLocal() as session:
+        job_id = int(job_data["link"].split("/")[-2])
+
+        job = Job(
+            id=job_id,
+            title=job_data["title"],
+            job_from=job_data["job_from"],
+            salary=job_data["salary"],
+            company=job_data["company"],
+            location=job_data["location"],
+            user_id=user_id,
+            link=job_data["link"]
+        )
+        session.add(job)
+        await session.commit()
+
+
+
+async def get_users_with_schedule():
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(select(User).filter(User.schedule_on == True))
         return result.scalars().all()
