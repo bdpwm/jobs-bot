@@ -1,8 +1,10 @@
+import asyncio
+from datetime import datetime
+
 import httpx
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-import asyncio
-from datetime import datetime
+
 from db_handlers.db import save_job
 
 

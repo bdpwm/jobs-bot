@@ -1,15 +1,17 @@
-import os
 import logging
+import os
+from urllib.parse import urlparse
+
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from db_handlers.models import Base
 from aiogram.fsm.storage.memory import MemoryStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
-from urllib.parse import urlparse
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
+
+from db_handlers.models import Base
 
 # .env in base directory
 load_dotenv()

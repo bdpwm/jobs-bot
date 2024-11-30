@@ -1,11 +1,13 @@
+from datetime import date, time, timedelta
+
+from sqlalchemy import delete, insert, update
+from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy import update, insert
+
 from create_bot import AsyncSessionLocal
-from sqlalchemy.exc import NoResultFound
-from db_handlers.models import User, Job
-from datetime import date, timedelta, time
-from sqlalchemy.dialects.postgresql import insert
+from db_handlers.models import Job, User
 
 
 async def insert_user(user_data: dict):
@@ -93,9 +95,15 @@ async def save_job(job_data, user_id):
         session.add(job)
         await session.commit()
 
-
-
 async def get_users_with_schedule():
     async with AsyncSessionLocal() as session:
         result = await session.execute(select(User).filter(User.schedule_on == True))
         return result.scalars().all()
+
+async def delete_jobs_for_user(user_id: int):
+    async with AsyncSessionLocal() as session:
+        async with session.begin():
+            await session.execute(
+                delete(Job).where(Job.user_id == user_id)
+            )
+            await session.commit()

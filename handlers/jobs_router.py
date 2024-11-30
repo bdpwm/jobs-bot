@@ -1,14 +1,19 @@
 import asyncio
-from aiogram import Router, F
-from aiogram.filters import CommandStart, CommandObject, Command
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from create_bot import bot, bot_username
-from db_handlers.db import insert_user, get_user_data, update_on_off_schedule, save_selected_hour, save_job_name
-from keyboards.kbs import main_kb
-from aiogram.utils.chat_action import ChatActionSender
-from utils.utils import fetch_job_work_ua
-from aiogram.fsm.state import State, StatesGroup
+
+from aiogram import F, Router
+from aiogram.filters import Command, CommandObject, CommandStart
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import (CallbackQuery, InlineKeyboardButton,
+                           InlineKeyboardMarkup, Message)
+from aiogram.utils.chat_action import ChatActionSender
+
+from create_bot import bot, bot_username
+from db_handlers.db import (get_user_data, insert_user, save_job_name,
+                            save_selected_hour, update_on_off_schedule)
+from keyboards.kbs import main_kb
+from utils.utils import fetch_job_work_ua
+
 
 class JobStates(StatesGroup):
     waiting_for_job_name = State()
@@ -23,7 +28,6 @@ async def on_off_handler(message: Message):
 
         if user_info.get("schedule_on") == True:
             await update_on_off_schedule(user_id=message.from_user.id, schedule_on=False)
-            await fetch_job_work_ua(job_name=user_info["job_name"], user_id=message.from_user.id)
             await message.answer(text="Your schedule is OFF now.")
         else:
             await update_on_off_schedule(user_id=message.from_user.id, schedule_on=True)
