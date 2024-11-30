@@ -87,7 +87,6 @@ async def save_job(job_data, user_id):
             job_from=job_data["job_from"],
             salary=job_data["salary"],
             company=job_data["company"],
-            location=job_data["location"],
             user_id=user_id,
             link=job_data["link"]
         )

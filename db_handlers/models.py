@@ -24,7 +24,6 @@ class Job(Base):
     job_from = Column(String)
     salary = Column(String)
     company = Column(String)
-    location = Column(String)
     user_id = Column(BigInteger, ForeignKey('user.user_id'))
     link = Column(String)
 

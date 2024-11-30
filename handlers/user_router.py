@@ -48,7 +48,6 @@ async def my_jobs_handler(message: Message):
             [
                 f"📋 <b>{job.title}</b>\n"
                 f"🏢 Company: {job.company}\n"
-                f"📍 Location: {job.location}\n"
                 f"💵 Salary: {job.salary}\n"
                 f"🔗 <a href='https://www.work.ua{job.link}'>Click</a>"
                 for job in jobs
@@ -73,7 +72,6 @@ async def send_jobs_page(chat_id, jobs, page):
         [
             f"📋 <b>{job.title}</b>\n"
             f"🏢 Company: {job.company}\n"
-            f"📍 Location: {job.location}\n"
             f"💵 Salary: {job.salary}\n"
             f"🔗 Link: {job.link}"
             for job in jobs_on_page
